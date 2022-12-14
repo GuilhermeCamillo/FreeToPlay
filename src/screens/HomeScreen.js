@@ -1,16 +1,14 @@
-import { useNavigation } from "@react-navigation/native";
+import React, { useEffect, useState } from "react";
+import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { FlashList } from "@shopify/flash-list";
 import axios from "axios";
-import { XCircle } from "phosphor-react-native";
-import React, { useEffect, useState } from "react";
-import { View, Text, TextInput } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import Card from "../components/Card";
 
 const HomeScreen = () => {
-  const navigation = useNavigation();
   const [games, setGames] = useState([]);
   const [list, setList] = useState(games);
+  const [text, setText] = useState("");
 
   useEffect(() => {
     try {
@@ -25,12 +23,16 @@ const HomeScreen = () => {
   }, []);
 
   const handleSearch = (text) => {
+    
+  };
+
+  useEffect(() => {
     setList(
       games.filter(
         (item) => item.title.toLowerCase().indexOf(text.toLowerCase()) > -1
       )
     );
-  };
+  }, [text]);
 
   return (
     <SafeAreaView className="flex-1 bg-gray-600">
@@ -40,19 +42,23 @@ const HomeScreen = () => {
           <Text className="text-white text-[16px]">
             Conheça todos os jogos free to play
           </Text>
-          <View className="bg-zinc-400 rounded-md p-2">
+          <View className="bg-zinc-400 rounded-md p-2 flex-row items-center">
             <TextInput
-              onChangeText={(text) => handleSearch(text)}
-              placeholder="Exemplo: Fortnite"
+              onChangeText={(text) => setText(text)}
+              placeholder="Example: Fortnite"
+              value={text}
+              className="flex-1 mr-3"
             />
-            <XCircle size="16" color="#000" />
+            <TouchableOpacity onPress={() => setText("")}>
+              <Text className="font-bold text-[20px] mr-[8px]">X</Text>
+            </TouchableOpacity>
           </View>
         </View>
         <View className="flex-1 px-2">
           <FlashList
             showsVerticalScrollIndicator={false}
             data={list}
-            renderItem={({ item, index }) => <Card key={item.id} data={item} />}
+            renderItem={({ item }) => <Card key={item.id} data={item} />}
             estimatedItemSize={27}
           />
         </View>
