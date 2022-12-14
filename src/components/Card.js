@@ -1,14 +1,9 @@
-import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 
-const Card = ({ data }) => {
-  const navigation = useNavigation();
+export const Card = ({ data, openModal }) => {
   return (
-    <TouchableOpacity
-      onPress={() => navigation.navigate("Details", {data: data})}
-      className="rounded-md mb-2 bg-white"
-    >
+    <TouchableOpacity onPress={openModal} className="rounded-md mb-2 bg-white">
       <View>
         <Image
           source={{ uri: data.thumbnail }}
@@ -28,5 +23,3 @@ const Card = ({ data }) => {
     </TouchableOpacity>
   );
 };
-
-export default Card;
