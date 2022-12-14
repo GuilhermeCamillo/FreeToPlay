@@ -12,8 +12,6 @@ const HomeScreen = () => {
   const [text, setText] = useState("");
   const [isOpen, setIsOpen] = useState(true);
 
-  const texto = "GUibaz";
-
   useEffect(() => {
     try {
       axios.get(`https://www.freetogame.com/api/games`).then((res) => {
