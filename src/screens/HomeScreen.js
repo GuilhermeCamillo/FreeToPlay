@@ -14,10 +14,9 @@ const HomeScreen = () => {
 
   useEffect(() => {
     try {
-      axios.get(`https://www.freetogame.com/api/games`).then((res) => {
-        const game = res.data;
-        setGames(game);
-        setList(game);
+      axios.get(`https://www.freetogame.com/api/games`).then(({data}) => {
+        setGames(data);
+        setList(data);
       });
     } catch (error) {
       console.error(error);
